@@ -8,7 +8,9 @@
     "vibe": "calm, precise, protective — a steady treasurer, never hyped"
   },
 
-  "model": "claude-sonnet-4-5",
+  "model": {
+    "default": "claude-sonnet-4-5"
+  },
 
   "secrets": [
     {
@@ -38,11 +40,8 @@
   "tasks": [
     {
       "name": "daily-portfolio-summary",
-      "schedule": { "kind": "cron", "expr": "0 8 * * *" },
-      "payload": {
-        "kind": "agentTurn",
-        "text": "Run the daily portfolio summary as described in workspace/HEARTBEAT.md: fetch balances and recent transactions via the stratos-wallet skill, compose the summary, and deliver it to the user's configured channel. This run is read-only — never transfer or sign."
-      }
+      "schedule": "0 8 * * *",
+      "prompt": "Run the daily portfolio summary as described in workspace/HEARTBEAT.md: fetch balances and recent transactions via the stratos-wallet skill, compose the summary, and deliver it to the user's configured channel. This run is read-only — never transfer or sign."
     }
   ],
 
@@ -51,6 +50,7 @@
   "template": {
     "slug": "stratos-portfolio-agent",
     "category": "finance",
+    "authorName": "Stratos",
     "partnerName": "Stratos",
     "tags": ["stratos", "wallet", "crypto", "portfolio", "multi-chain", "canton"]
   }
