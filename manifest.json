@@ -1,4 +1,6 @@
 {
+  "version": 1,
+
   "agent": {
     "name": "Strat — Stratos Portfolio Agent",
     "description": "A personal crypto treasury agent that watches a Stratos multi-chain wallet: reports balances, addresses and transactions on demand, posts a daily portfolio summary, and executes transfers with explicit confirmation.",
@@ -6,9 +8,7 @@
     "vibe": "calm, precise, protective — a steady treasurer, never hyped"
   },
 
-  "model": {
-    "default": "claude-sonnet-4-5"
-  },
+  "model": "claude-sonnet-4-5",
 
   "secrets": [
     {
@@ -31,38 +31,27 @@
   "skills": [
     {
       "name": "stratos-wallet",
-      "path": "skills/stratos-wallet",
-      "description": "Bundled skill: read balances/addresses/transactions and run transfers/signs against the Stratos SDK REST API."
+      "cid": "QmczxGKuMYUwCJ6JV1oCbqHr3JcYyTYXA7Ph4Rw2L5B7Ew"
     }
   ],
 
   "tasks": [
     {
       "name": "daily-portfolio-summary",
-      "schedule": "0 8 * * *",
-      "prompt": "Run the daily portfolio summary as described in workspace/HEARTBEAT.md: fetch balances and recent transactions via the stratos-wallet skill, compose the summary, and deliver it to the user's configured channel. This run is read-only — never transfer or sign."
+      "schedule": { "kind": "cron", "expr": "0 8 * * *" },
+      "payload": {
+        "kind": "agentTurn",
+        "text": "Run the daily portfolio summary as described in workspace/HEARTBEAT.md: fetch balances and recent transactions via the stratos-wallet skill, compose the summary, and deliver it to the user's configured channel. This run is read-only — never transfer or sign."
+      }
     }
   ],
 
   "channels": {},
 
   "template": {
-    "title": "Stratos Portfolio Agent",
-    "summary": "Watch and operate a Stratos multi-chain wallet from chat — balances, transactions, a daily summary, and confirmed transfers.",
+    "slug": "stratos-portfolio-agent",
     "category": "finance",
-    "tags": ["stratos", "wallet", "crypto", "portfolio", "multi-chain", "canton"],
-    "partner": "Stratos",
-    "setupRequired": true
-  },
-
-  "_docs": {
-    "REMOVE_BEFORE_SUBMISSION": "Delete this entire _docs block before submitting to the Pinata marketplace.",
-    "schemaCaveat": "This manifest was authored from the Pinata template docs (agents/templates/creating). Field names within each section are best-effort. Run Pinata's 'Validate' step (UI or CLI) before submission and reconcile against the current manifest schema.",
-    "model": "model.default is set to claude-sonnet-4-5 as a sensible default. Change it to whichever model identifier Pinata's platform expects / the partner prefers.",
-    "skills": "The stratos-wallet skill is bundled in this repo at skills/stratos-wallet/ so the template is self-contained. Pinata's documented manifest 'skills' entries reference marketplace packages via 'clawhub_slug' or pin an IPFS version via 'cid'. For a polished marketplace listing, publish skills/stratos-wallet to ClawHub and replace the bundled reference with { \"clawhub_slug\": \"stratos-wallet\" }.",
-    "channels": "Left empty — the user wires up Telegram/Slack/Discord post-deploy so the daily summary has somewhere to land.",
-    "scripts": "No build/start scripts: the skill helper is dependency-free Node (uses built-in fetch). Add a 'scripts' block only if you later add a web app / route.",
-    "routes": "None. This agent works through chat + the daily heartbeat; it runs no web server. A portfolio dashboard route would be a reasonable v2 enhancement.",
-    "tasks": "One daily task at 08:00 UTC. Adjust the cron to the user's timezone preference."
+    "partnerName": "Stratos",
+    "tags": ["stratos", "wallet", "crypto", "portfolio", "multi-chain", "canton"]
   }
 }
