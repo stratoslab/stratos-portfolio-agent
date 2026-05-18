@@ -9,7 +9,7 @@
   },
 
   "model": {
-    "default": "claude-sonnet-4-5"
+    "default": "openrouter/free"
   },
 
   "secrets": [
@@ -27,13 +27,6 @@
       "name": "STRATOS_API_SECRET",
       "description": "Stratos SDK API secret — a 32-byte hex string issued alongside the key. Shown once.",
       "required": true
-    }
-  ],
-
-  "skills": [
-    {
-      "name": "stratos-wallet",
-      "cid": "QmczxGKuMYUwCJ6JV1oCbqHr3JcYyTYXA7Ph4Rw2L5B7Ew"
     }
   ],
 

@@ -57,10 +57,10 @@ workspace/
   USER.md                              Per-user context (filled in at runtime)
   TOOLS.md                             Environment notes
   HEARTBEAT.md                         Daily portfolio summary task
-skills/
-  stratos-wallet/
-    SKILL.md                           How the agent uses the Stratos API
-    scripts/stratos.mjs                Dependency-free Stratos REST client (Node)
+  skills/
+    stratos-wallet/
+      SKILL.md                         How the agent uses the Stratos API
+      scripts/stratos.mjs              Dependency-free Stratos REST client (Node)
 ```
 
 ## How it talks to Stratos
