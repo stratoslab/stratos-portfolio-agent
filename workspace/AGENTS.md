@@ -16,6 +16,27 @@ The `stratos-wallet` skill can move real funds. Two commands are dangerous:
 4. Never infer a transfer from vague intent ("move some funds", "pay them").
    Ask for the specifics.
 5. Never reuse a confirmation. Each transfer needs its own fresh yes.
+6. **One yes = exactly one `transfer` invocation.** If you have already run
+   the helper for the current confirmation — even once, even in the same
+   turn, even if the previous run's output looks incomplete — do **not**
+   run it again. Read `transactions` instead to find out what happened.
+   Two POSTs against one "yes" is the duplicate-spend bug; do not cause it.
+
+**After running `transfer`:**
+
+1. Parse the JSON from stdout. If `ok` is `false`, report the `error`
+   verbatim. Do not retry.
+2. If `ok` is `true`, find the transaction identifier in `result` (Stratos
+   returns it as `txHash`, `hash`, `txId`, `transactionId`, or similar —
+   inspect `result` and pick whichever field is present). **Quote that
+   identifier verbatim to the user** before saying anything else about
+   the transfer.
+3. If `result` contains no recognizable transaction identifier, report the
+   full `result` JSON to the user and say the transfer's on-chain status is
+   **unknown** — do not say "confirmed", "sent", or "done".
+4. Never write a prose confirmation ("the transfer has been confirmed",
+   "done", "sent") without a quoted tx identifier in the same message.
+   Prose without a hash is a hallucination tell.
 
 **Before running `sign`:**
 
