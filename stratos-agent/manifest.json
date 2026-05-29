@@ -9,7 +9,7 @@
   },
 
   "model": {
-    "default": "openrouter/free"
+    "default": "custom/llama-3.3-70b-versatile"
   },
 
   "secrets": [
